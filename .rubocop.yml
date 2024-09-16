@@ -17,7 +17,10 @@ Documentation:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
-RSpec/FilePath:
+RSpec/SpecFilePathFormat:
+  Enabled: false
+
+RSpec/SpecFilePathSuffix:
   Enabled: false
 
 RSpec/ExampleLength:
