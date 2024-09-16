@@ -41,4 +41,26 @@ describe Sidekiq::Grouping::Redis do
       expect(redis_call(:smembers, unique_key)).to eq []
     end
   end
+
+  describe "#pluck_script" do
+    context "when Redis server version is" do
+      it ">= 6.2.0, selects the corresponding pluck script" do
+        allow_any_instance_of(described_class)
+          .to receive(:server_version)
+          .and_return("6.2.0")
+        expect(redis_service.send(:pluck_script)).to eq(
+          described_class::PLUCK_SCRIPT_GTE_6_2_0
+        )
+      end
+
+      it "< 6.2.0, selects the corresponding pluck script" do
+        allow_any_instance_of(described_class)
+          .to receive(:server_version)
+          .and_return("6.0.0")
+        expect(redis_service.send(:pluck_script)).to eq(
+          described_class::PLUCK_SCRIPT_LT_6_2_0
+        )
+      end
+    end
+  end
 end

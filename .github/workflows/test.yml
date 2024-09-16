@@ -37,6 +37,10 @@ jobs:
           bundler: 2
           ruby-version: ${{ matrix.ruby_version }}
 
+      # Fix "installation path is insecure". Followed https://github.com/rubygems/rubygems/issues/7983
+      - name: Change permissions
+        run: chmod -R o-w /opt/hostedtoolcache/Ruby/3.1.6/x64/lib/ruby/gems/3.1.0/gems
+
       # Appraisal doesn't support vendored install
       # See: https://github.com/thoughtbot/appraisal/issues/173
       #      https://github.com/thoughtbot/appraisal/pull/174
