@@ -112,6 +112,11 @@ module Sidekiq
         "batching:#{key}"
       end
 
+      #
+      # Get Redis server version
+      #
+      # @return [String] Redis server version
+      #
       def server_version
         Sidekiq.redis do |conn|
           conn.info["redis_version"]
@@ -122,7 +127,7 @@ module Sidekiq
       # The optimized LUA SCRIPT works from Redis greater than or equal to 6.2.
       # Check Redis version in use and return the suitable PLUCK_SCRIPT
       #
-      # @return [<Type>] <description>
+      # @return [String] Lua Script
       #
       def pluck_script
         if Gem::Version.new(server_version) >= Gem::Version.new(BREAK_VERSION)
